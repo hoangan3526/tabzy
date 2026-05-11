@@ -18,26 +18,9 @@ function Tabzy(selector) {
   if (this.tabs.length !== this.panels.length) return;
   this._init();
 }
-Tabzy.prototype.activeTable = function (index) {
-  this.tabs.forEach((tab) => tab.closest("li").classList.remove("tab-active"));
-
-  this.tabs[index].closest("li").classList.add("tab-active");
-
-  this.panels.forEach((panel) => (panel.hidden = true));
-
-  this.panels[index].hidden = false;
-};
 Tabzy.prototype._init = function () {
-  this.activeTable(0);
-  this.tabs.forEach((tab) => {
-    tab.onclick = (event) => {
-      this._handelTabs(event, tab);
-    };
-  });
-};
-Tabzy.prototype._handelTabs = function (event, index) {
-  event.preventDefault();
-
-  this.activeTable(index);
+  const tabActive = this.tabs[0];
+  tabActive.closest("li").classList.add("tab-active");
+  console.log(this.panels);
 };
 const tab = new Tabzy("#tabs");

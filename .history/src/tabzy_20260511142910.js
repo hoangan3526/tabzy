@@ -25,15 +25,20 @@ Tabzy.prototype.activeTable = function (index) {
 
   this.panels.forEach((panel) => (panel.hidden = true));
 
-  this.panels[index].hidden = false;
+  this.panels[index] = false;
 };
 Tabzy.prototype._init = function () {
-  this.activeTable(0);
+  const tabActive = this.tabs[0];
+  tabActive.closest("li").classList.add("tab-active");
+
+  this.panels.forEach((panel) => (panel.hidden = true));
   this.tabs.forEach((tab) => {
     tab.onclick = (event) => {
       this._handelTabs(event, tab);
     };
   });
+  const currentPanel = this.panels[0];
+  currentPanel.hidden = false;
 };
 Tabzy.prototype._handelTabs = function (event, index) {
   event.preventDefault();

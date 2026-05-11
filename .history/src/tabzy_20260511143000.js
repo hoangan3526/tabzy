@@ -25,7 +25,7 @@ Tabzy.prototype.activeTable = function (index) {
 
   this.panels.forEach((panel) => (panel.hidden = true));
 
-  this.panels[index].hidden = false;
+  this.panels[index] = false;
 };
 Tabzy.prototype._init = function () {
   this.activeTable(0);

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/tabzy.css" />
+    <title>Tabzy</title>
+  </head>
+  <style>
+    .tab-active a {
+      color: red;
+    }
+  </style>
+  <body>
+    <ul id="tabs">
+      <li>
+        <a href="#tab1"> Tab1 </a>
+      </li>
+      <li>
+        <a href="#tab2"> Tab2 </a>
+      </li>
+      <li>
+        <a href="#tab3"> Tab3 </a>
+      </li>
+    </ul>
+
+    <div id="tab1">content Tab1</div>
+    <div id="tab2">content Tab2</div>
+    <div id="tab3">content Tab3</div>
+
+    <script src="src/tabzy.js"></script>
+
+    <!-- <script>
+        const tab1 = new Tabzy("#tab1");
+
+        tab1.toggle("tab2")  /// hien tab 2 len
+        tab.destroy() // tra ve nhu cu
+    </script> -->
+  </body>
+</html>

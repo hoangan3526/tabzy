@@ -59,9 +59,6 @@ Tabzy.prototype._handelTabs = function (event, tab) {
 Tabzy.prototype.destroy = function () {
   this.container.innerHTML = this._originalHTML;
   this.panels.forEach((panel) => (panel.hidden = false));
-  this.container = null;
-  this.tabs = null;
-  this.panels = null;
 };
 const tab = new Tabzy("#tabs");
 // tab.switch("#tab1");

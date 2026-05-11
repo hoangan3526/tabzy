@@ -16,8 +16,8 @@ function Tabzy(selector) {
     })
     .filter(Boolean);
   if (this.tabs.length !== this.panels.length) return;
-  this._originalHTML = this.container.innerHTML;
   this._init();
+  this._originalHTML = this.container.innerHTML;
 }
 Tabzy.prototype.activeTab = function (tab) {
   this.tabs.forEach((tab) => tab.closest("li").classList.remove("tab-active"));
@@ -57,11 +57,7 @@ Tabzy.prototype._handelTabs = function (event, tab) {
   this.activeTab(tab);
 };
 Tabzy.prototype.destroy = function () {
-  this.container.innerHTML = this._originalHTML;
-  this.panels.forEach((panel) => (panel.hidden = false));
-  this.container = null;
-  this.tabs = null;
-  this.panels = null;
+  this.container = this._originalHTML;
 };
 const tab = new Tabzy("#tabs");
 // tab.switch("#tab1");

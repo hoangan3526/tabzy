@@ -82,7 +82,7 @@ Tabzy.prototype.activateTab = function (tab) {
       this.paramKey,
       tab.getAttribute("href").replace(/[^a-zA-Z0-9]/g, ""),
     );
-    history.replaceState("null", "null", `?${params}`);
+    history.replaceState("null", "null", `? ${params}`);
   }
 };
 

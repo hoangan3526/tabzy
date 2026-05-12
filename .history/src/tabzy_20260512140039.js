@@ -60,7 +60,6 @@ Tabzy.prototype._init = function () {
       hash &&
       this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
     this.tabs[0];
-
   this.activateTab(tab);
   this.tabs.forEach((tab) => {
     tab.onclick = (event) => {
@@ -80,8 +79,6 @@ Tabzy.prototype.destroy = function () {
   this.tabs = null;
   this.panels = null;
 };
-const tab = new Tabzy("#tabs", {
-  remember: true,
-});
+const tab = new Tabzy("#tabs", (remember = true));
 // tab.switch("#tab1");
 // tab.destroy();

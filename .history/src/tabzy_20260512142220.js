@@ -4,7 +4,6 @@ function Tabzy(selector, options = {}) {
     console.error(`Tabzy: No container found for selector '${selector}'`);
     return;
   }
-  this.tabURL = selector;
 
   this.tabs = Array.from(this.container.querySelectorAll("li a"));
   if (!this.tabs.length) {
@@ -24,25 +23,53 @@ function Tabzy(selector, options = {}) {
   this.opt = Object.assign(
     {
       remember: false,
-      selector,
     },
     options,
   );
   this._originalHTML = this.container.innerHTML;
   this._init();
 }
+Tabzy.prototype.activateTab = function (tab) {
+  this.tabs.forEach((tab) => tab.closest("li").classList.remove("tab-active"));
 
+  tab.closest("li").classList.add("tab-active");
+
+  this.panels.forEach((panel) => (panel.hidden = true));
+
+  const index = this.tabs.indexOf(tab);
+  if (index !== -1) {
+    this.panels[index].hidden = false;
+  }
+  if (this.opt.remember) {
+    window.addEventListener("hashchange", () => {
+      const currentHash = location.hash;
+      const tabToActive = this.tabs.find(
+        (tab) => tab.getAttribute("href") === currentHash,
+      );
+
+      if (tabToActive) {
+        this.activateTab(tabToActive);
+      }
+    });
+  }
+};
+Tabzy.prototype.switch = function (input) {
+  let tabToActivate = null;
+  if (typeof input === "string") {
+    tabToActivate = this.tabs.find((tab) => tab.getAttribute("href") === input);
+  } else if (this.tabs.includes(input)) {
+    tabToActivate = input;
+  }
+  if (!tabToActivate) return console.error("errroror");
+
+  this.activateTab(tabToActivate);
+};
 Tabzy.prototype._init = function () {
-  const params = new URLSearchParams(location.search);
-  const queryId = this.tabURL.replace("#", "");
-
-  const hash = params.get(queryId);
-  console.log(hash);
-
+  const hash = location.hash;
   const tab =
     (this.opt.remember &&
       hash &&
-      this.tabs.find((tab) => tab.getAttribute("href") === "#" + hash)) ||
+      this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
     this.tabs[0];
 
   this.activateTab(tab);
@@ -63,40 +90,6 @@ Tabzy.prototype.destroy = function () {
   this.container = null;
   this.tabs = null;
   this.panels = null;
-};
-Tabzy.prototype.activateTab = function (tab) {
-  this.tabs.forEach((tab) => tab.closest("li").classList.remove("tab-active"));
-
-  tab.closest("li").classList.add("tab-active");
-
-  this.panels.forEach((panel) => (panel.hidden = true));
-
-  const index = this.tabs.indexOf(tab);
-  if (index !== -1) {
-    this.panels[index].hidden = false;
-  }
-  if (this.opt.remember) {
-    const params = new URLSearchParams(location.search);
-
-    const targetId = tab.getAttribute("href").replace("#", "");
-
-    const queryId = this.tabURL.replace("#", "");
-
-    params.set(queryId, targetId);
-    history.replaceState("null", "null", "?" + params);
-  }
-};
-
-Tabzy.prototype.switch = function (input) {
-  let tabToActivate = null;
-  if (typeof input === "string") {
-    tabToActivate = this.tabs.find((tab) => tab.getAttribute("href") === input);
-  } else if (this.tabs.includes(input)) {
-    tabToActivate = input;
-  }
-  if (!tabToActivate) return console.error("errroror");
-
-  this.activateTab(tabToActivate);
 };
 const tab = new Tabzy("#tabs", {
   remember: true,

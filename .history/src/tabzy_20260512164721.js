@@ -33,16 +33,11 @@ function Tabzy(selector, options = {}) {
 }
 
 Tabzy.prototype._init = function () {
-  const params = new URLSearchParams(location.search);
-  const queryId = this.tabURL.replace("#", "");
-
-  const hash = params.get(queryId);
-  console.log(hash);
-
+  const hash = location.hash;
   const tab =
     (this.opt.remember &&
       hash &&
-      this.tabs.find((tab) => tab.getAttribute("href") === "#" + hash)) ||
+      this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
     this.tabs[0];
 
   this.activateTab(tab);
@@ -77,13 +72,9 @@ Tabzy.prototype.activateTab = function (tab) {
   }
   if (this.opt.remember) {
     const params = new URLSearchParams(location.search);
+    console.log(params);
 
-    const targetId = tab.getAttribute("href").replace("#", "");
-
-    const queryId = this.tabURL.replace("#", "");
-
-    params.set(queryId, targetId);
-    history.replaceState("null", "null", "?" + params);
+    history.replaceState(null, null, tab.getAttribute("href"));
   }
 };
 

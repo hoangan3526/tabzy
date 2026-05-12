@@ -42,7 +42,7 @@ Tabzy.prototype._init = function () {
   const tab =
     (this.opt.remember &&
       hash &&
-      this.tabs.find((tab) => tab.getAttribute("href") === "#" + hash)) ||
+      this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
     this.tabs[0];
 
   this.activateTab(tab);

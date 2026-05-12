@@ -4,7 +4,6 @@ function Tabzy(selector, options = {}) {
     console.error(`Tabzy: No container found for selector '${selector}'`);
     return;
   }
-  this.tabURL = selector;
 
   this.tabs = Array.from(this.container.querySelectorAll("li a"));
   if (!this.tabs.length) {
@@ -24,7 +23,6 @@ function Tabzy(selector, options = {}) {
   this.opt = Object.assign(
     {
       remember: false,
-      selector,
     },
     options,
   );
@@ -33,16 +31,11 @@ function Tabzy(selector, options = {}) {
 }
 
 Tabzy.prototype._init = function () {
-  const params = new URLSearchParams(location.search);
-  const queryId = this.tabURL.replace("#", "");
-
-  const hash = params.get(queryId);
-  console.log(hash);
-
+  const hash = location.hash;
   const tab =
     (this.opt.remember &&
       hash &&
-      this.tabs.find((tab) => tab.getAttribute("href") === "#" + hash)) ||
+      this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
     this.tabs[0];
 
   this.activateTab(tab);
@@ -76,14 +69,7 @@ Tabzy.prototype.activateTab = function (tab) {
     this.panels[index].hidden = false;
   }
   if (this.opt.remember) {
-    const params = new URLSearchParams(location.search);
-
-    const targetId = tab.getAttribute("href").replace("#", "");
-
-    const queryId = this.tabURL.replace("#", "");
-
-    params.set(queryId, targetId);
-    history.replaceState("null", "null", "?" + params);
+    history.replaceState(null, null, tab.getAttribute("href"));
   }
 };
 

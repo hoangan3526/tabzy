@@ -37,12 +37,11 @@ Tabzy.prototype._init = function () {
   const queryId = this.tabURL.replace("#", "");
 
   const hash = params.get(queryId);
-  console.log(hash);
 
   const tab =
     (this.opt.remember &&
       hash &&
-      this.tabs.find((tab) => tab.getAttribute("href") === "#" + hash)) ||
+      this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
     this.tabs[0];
 
   this.activateTab(tab);

@@ -33,16 +33,13 @@ function Tabzy(selector, options = {}) {
 }
 
 Tabzy.prototype._init = function () {
-  const params = new URLSearchParams(location.search);
-  const queryId = this.tabURL.replace("#", "");
-
-  const hash = params.get(queryId);
+  const hash = location.search;
   console.log(hash);
 
   const tab =
     (this.opt.remember &&
       hash &&
-      this.tabs.find((tab) => tab.getAttribute("href") === "#" + hash)) ||
+      this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
     this.tabs[0];
 
   this.activateTab(tab);
